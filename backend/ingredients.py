@@ -27,11 +27,7 @@ def getingredients(barcode):
     else:
         product = product['product']
 
-        try: 
-            ingredients = product['ingredients_en']
-        except: 
-            ingredients = product['ingredients']
-
+        ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
         ingredients = list(filter(filteringredients, ingredients))
@@ -43,9 +39,11 @@ def getingredients(barcode):
 def extractingredients(ingredients): 
     finalingredients = list()
     
+    print(ingredients)
+
     if len(ingredients) > 1: 
         for ingredient in ingredients: 
-            finalingredients.append(ingredient['text'].lower())
+            finalingredients.append(ingredient['id'][3:].replace("-"," ").lower())
         
         ingredients = finalingredients
         finalingredients = list()
@@ -58,7 +56,7 @@ def extractingredients(ingredients):
                     finalingredients.append(x)
 
     elif (len(ingredients) == 1): 
-        finalingredients = ingredients[0]['text'].lower().split(' ')
+        finalingredients = ingredients[0]['id'][3:].lower().split(' ').replace("-"," ")
    
     else:
         return []
