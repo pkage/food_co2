@@ -27,7 +27,11 @@ def getingredients(barcode):
     else:
         product = product['product']
 
-        ingredients = product['ingredients']
+        try: 
+            ingredients = product['ingredients_en']
+        except: 
+            ingredients = product['ingredients']
+
 
         ingredients = extractingredients(ingredients)
         ingredients = list(filter(filteringredients, ingredients))
