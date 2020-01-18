@@ -34,7 +34,7 @@ def __getingredients(barcode):
         
         ingredients = remduplicates(ingredients)
 
-        return {"ingredients": ingredients, "quantity": quantity}
+        return {"ingredients": ingredients, "quantity": product["quantity"]}
 
 def getingredients(barcode):
     return __getingredients(barcode)["ingredients"]
