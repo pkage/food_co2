@@ -2,3 +2,8 @@
     --accent-1: #244F26;
     --accent-2: #424342;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+}

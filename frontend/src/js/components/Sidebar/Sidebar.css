@@ -1,0 +1,86 @@
+.Sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    height: 100vh;
+    width: 100vw;
+
+    will-change: transform, background-color;
+    transition: transform 0.25s cubic-bezier(0,0,0.3,1),
+                background-color 0.25s cubic-bezier(0,0,0.3,1);
+
+
+    background-color: rgba(0,0,0,0);
+    transform: translateX(0);
+    pointer-events: none;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    --sidebar-width: 15em;
+    --button-size:   40px;
+}
+
+.Sidebar--active {
+    pointer-events: initial;
+
+    background-color: rgba(0,0,0,0.3);
+    transform: translateX(var(--sidebar-width));
+}
+
+.Sidebar--active .Sidebar__button {
+    background-color: var(--accent-1);
+    color: white;
+}
+
+
+.Sidebar__menucontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100vw;
+
+    transform: translateX(calc(-1 * var(--sidebar-width)));
+
+}
+
+.Sidebar__closearea {
+    flex-grow: 1;
+    height: 100vh;
+}
+
+.Sidebar__menu {
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    background-color: var(--accent-1);
+}
+
+.Sidebar__button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    width: var(--button-size);
+    height: var(--button-size);
+    background-color: rgba(255,255,255,0);
+
+    color: var(--accent-1);
+    transition: background-color 0.25s cubic-bezier(0,0,0.3,1),
+                color 0.25s cubic-bezier(0,0,0.3,1);
+
+    pointer-events: initial;
+    margin-left: var(--sidebar-width);
+    z-index: 1;
+
+    cursor: pointer;
+}
+
+
+
