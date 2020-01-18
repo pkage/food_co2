@@ -10,11 +10,9 @@ for x in data:
     for y in x: 
         keywords.append(singularize(y.lower()))
 
-
 def getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
     
-    #Don't have the product 
     if(int(product['status']) == 0): 
         print(product['status_verbose'])
         return []
@@ -42,12 +40,10 @@ def extractingredients(ingredients):
 
     for x in finalingredients: 
         ingredients.append(singularize(x))
-
     return ingredients
 
 def filteringredients(ingredient): 
     return (ingredient in keywords)
-
 
 if(__name__== "__main__"): 
     print(getingredients("51000005"))
