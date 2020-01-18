@@ -1,2 +1,2 @@
 git+https://github.com/openfoodfacts/openfoodfacts-python
-pattern
+inflect

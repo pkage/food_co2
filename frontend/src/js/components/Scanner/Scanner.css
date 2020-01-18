@@ -1,0 +1,25 @@
+
+
+#interactive {
+    opacity: 0.5;
+    position: relative;
+}
+
+#interactive canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+.Scanner__container {
+    position: relative;
+    
+}
+.ScannerCanvas__canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+}

@@ -1,17 +1,24 @@
 import openfoodfacts
 import json
-# from pattern.en import singularize
+import inflect
+
+p = inflect.engine()
 
 with open('/Users/findlaysmith/Documents/food_co2/backend/keywords.json') as f:
     data = json.load(f)
 keywords = data
 
-# for x in data:
-#     for y in x:
-#         keywords.append(singularize(y.lower().replace(" ", "")))
+for x in data: 
+    for y in x: 
+        t = y.lower().replace(" ","")
+        tsingle = p.singular_noun(t)
 
+        if (tsingle != False): 
+            keywords.append(tsingle)
+        else: 
+            keywords.append(t)
 
-def getingredients(barcode):
+def __getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
 
     if(int(product['status']) == 0):
@@ -27,16 +34,24 @@ def getingredients(barcode):
 
         ingredients = remduplicates(ingredients)
 
-        return ingredients
+        return {"ingredients": ingredients, "quantity": product["quantity"]}
+
+def getingredients(barcode):
+    return __getingredients(barcode)["ingredients"]
+
+def getingredientswithquantity(barcode):
+    return __getingredients(barcode)
 
 
 def extractingredients(ingredients):
     finalingredients = list()
+    
+    #print(ingredients)
 
-    if len(ingredients) > 1:
-        for ingredient in ingredients:
-            finalingredients.append(ingredient['text'].lower())
-
+    if len(ingredients) > 1: 
+        for ingredient in ingredients: 
+            finalingredients.append(ingredient['id'][3:].replace("-"," ").lower())
+        
         ingredients = finalingredients
         finalingredients = list()
 
@@ -47,11 +62,19 @@ def extractingredients(ingredients):
                 for x in i:
                     finalingredients.append(x)
 
-    elif (len(ingredients) == 1):
-        finalingredients = ingredients[0]['text'].lower().split(' ')
-
+    elif (len(ingredients) == 1): 
+        finalingredients = ingredients[0]['id'][3:].lower().split(' ').replace("-"," ")
+   
     else:
         return []
+    
+    ingredients = list()
+    for ingredient in finalingredients: 
+        translated = p.singular_noun(ingredient)
+        if (translated != False): 
+            ingredients.append(translated)
+        else: 
+            ingredients.append(ingredient)
 
     # ingredients = list()
     # for ingredient in finalingredients:
@@ -73,6 +96,5 @@ def remduplicates(input):
 
     return result
 
-
-if(__name__ == "__main__"):
+if(__name__== "__main__"): 
     print(getingredients("51000005"))

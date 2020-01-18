@@ -1,6 +1,6 @@
 ### macOS
 .DS_store
-
+.vscode/
 
 ### Node
 # Logs
