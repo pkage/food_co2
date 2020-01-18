@@ -66,7 +66,6 @@ def get_carbon_footprint(barcode):
     ingreds = _ingreds["ingredients"]
     quantity = splitshit(_ingreds["quantity"])
     scale = 1
-    print (quantity)
     if (quantity[1] == "ml" or quantity[1] == "g"):
         scale = 0.001
     if (quantity[1] == "cl" or quantity[1] == "dag"):
