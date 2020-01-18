@@ -50,8 +50,16 @@ def get_min_max(carr):
         
 
 def get_carbon_footprint(barcode):
-    ingreds = ingredients.getingredients(barcode)
-    weight = 0.025 # in kilograms TODO
+    _ingreds = ingredients.getingredientswithquantity(barcode)
+    ingreds = _ingreds["ingredients"]
+    quantity = _ingreds["quantity"].split(' ')
+    scale = 1
+    if (quantity[1] == "ml" or quantity[1] == "g"):
+        scale = 0.001
+    if (quantity[1] == "cl" or quantity[1] == "dag"):
+        scale = 0.01
+
+    weight = quantity * scale
 
     pollution_factors = [pollution[ingre] for ingre in ingreds]
 
@@ -62,5 +70,6 @@ def get_carbon_footprint(barcode):
 
 if __name__ == "__main__":
     print(get_carbon_footprint("51000005"))
-    print(get_carbon_footprint("5060088701942"))
+    #print(get_carbon_footprint("5060088701942"))
+    print(get_carbon_footprint("4251097403083")) # beef jerky
 
