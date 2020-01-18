@@ -599,6 +599,13 @@
     },
     {
         "keywords": [
+            "sugar"
+        ],
+        "categories":["carbohydrate"],
+        "co2": 0.24
+    },
+    {
+        "keywords": [
             "Vegetable Oils",
             "Vegetable oil"
         ],
