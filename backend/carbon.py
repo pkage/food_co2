@@ -77,8 +77,9 @@ def get_carbon_footprint(barcode):
 
     mm = get_min_max(pollution_factors)
 
-    return {"min": mm["min"]*weight,
-            "max": mm["max"]*weight}
+    return {"min_per_kg": mm["min"],
+            "max_per_kg": mm["max"],
+            "weight_in_kg": weight}`
 
 if __name__ == "__main__":
     print(get_carbon_footprint("51000005"))
