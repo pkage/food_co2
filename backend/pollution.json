@@ -801,5 +801,10 @@
         "keywords":["egg", "eggs"],
         "categories":["dairy", "protein"],
         "co2":4.8
+    },
+    {
+        "keywords":["quorn"],
+        "categories":["mycoprotein", "meat alternative"],
+        "co2":1.2
     }
 ]
