@@ -8,7 +8,7 @@ keywords = list()
 
 for x in data: 
     for y in x: 
-        keywords.append(singularize(y.lower()))
+        keywords.append(singularize(y.lower().replace(" ","")))
 
 def getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -22,32 +22,52 @@ def getingredients(barcode):
         ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
-        print(ingredients)
         ingredients = list(filter(filteringredients, ingredients))
         
+        ingredients = remduplicates(ingredients)
+
         return ingredients
 
 def extractingredients(ingredients): 
     finalingredients = list()
     
-    if len(ingredients) == 1: 
+    if len(ingredients) > 1: 
         for ingredient in ingredients: 
             finalingredients.append(ingredient['text'].lower())
+        
+        ingredients = finalingredients
+        finalingredients = list()
 
-    elif (len(ingredients) > 1): 
+        for ingredient in ingredients: 
+            finalingredients.append(ingredient)
+            if " " in ingredient: 
+                i = ingredient.split(" ")
+                for x in i: 
+                    finalingredients.append(x)
+
+    elif (len(ingredients) == 1): 
         finalingredients = ingredients[0]['text'].lower().split(' ')
    
     else:
         return []
-
+    
     ingredients = list()
+    for ingredient in finalingredients: 
+        ingredients.append(singularize(ingredient))
 
-    for x in finalingredients: 
-        ingredients.append(singularize(x))
     return ingredients
 
 def filteringredients(ingredient): 
     return (ingredient in keywords)
 
+def remduplicates(input): 
+    result = list()
+
+    for x in input: 
+        if not (x in result): 
+            result.append(x)
+
+    return result
+
 if(__name__== "__main__"): 
-    print(getingredients("5010044002378"))
+    print(getingredients("51000005"))

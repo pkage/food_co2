@@ -64,7 +64,8 @@
     },
     {
         "keywords": [
-            "grapes"
+            "grapes", 
+            "raisin"
         ],
         "categories":["fruit", "snack"],
         "co2": 0.83
