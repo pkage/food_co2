@@ -4,9 +4,9 @@ import inflect
 
 p = inflect.engine()
 
-with open('/Users/findlaysmith/Documents/food_co2/backend/keywords.json') as f:
+with open('backend/keywords.json') as f:
     data = json.load(f)
-keywords = data
+keywords = list()
 
 for x in data: 
     for y in x: 
@@ -17,6 +17,8 @@ for x in data:
             keywords.append(tsingle)
         else: 
             keywords.append(t)
+        
+        #keywords.append(t)
 
 def __getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -75,6 +77,7 @@ def extractingredients(ingredients):
             ingredients.append(translated)
         else: 
             ingredients.append(ingredient)
+        #ingredients.append(ingredient)
 
     # ingredients = list()
     # for ingredient in finalingredients:
@@ -97,4 +100,4 @@ def remduplicates(input):
     return result
 
 if(__name__== "__main__"): 
-    print(getingredients("51000005"))
+    print(__getingredients("51000005"))
