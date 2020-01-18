@@ -49,24 +49,37 @@ def get_min_max(carr):
                 "min_mi": _min["x"], "max_mi": _max["x"]}
         
 
+def splitshit(quantity):
+    firstnonnum = 0
+    for i in range(len(quantity)):
+        if quantity[i].isdigit():
+            firstnonnum = i;
+    firstnonnum += 1
+    units = firstnonnum
+    if quantity[units] == ' ':
+        units += 1
+    
+    return [quantity[:firstnonnum], quantity[units:]]
+
 def get_carbon_footprint(barcode):
     _ingreds = ingredients.getingredientswithquantity(barcode)
     ingreds = _ingreds["ingredients"]
-    quantity = _ingreds["quantity"].split(' ')
+    quantity = splitshit(_ingreds["quantity"])
     scale = 1
     if (quantity[1] == "ml" or quantity[1] == "g"):
         scale = 0.001
     if (quantity[1] == "cl" or quantity[1] == "dag"):
         scale = 0.01
 
-    weight = quantity * scale
+    weight = int(quantity[0]) * scale
 
     pollution_factors = [pollution[ingre] for ingre in ingreds]
 
     mm = get_min_max(pollution_factors)
 
-    return {"min": mm["min"]*weight,
-            "max": mm["max"]*weight}
+    return {"min_per_kg": mm["min"],
+            "max_per_kg": mm["max"],
+            "weight_in_kg": weight}`
 
 if __name__ == "__main__":
     print(get_carbon_footprint("51000005"))
