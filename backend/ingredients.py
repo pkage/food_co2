@@ -1,6 +1,8 @@
 import openfoodfacts
 import json
-from pattern.en import singularize
+import inflect
+
+p = inflect.engine()
 
 with open('keywords.json') as f:
   data = json.load(f)
@@ -8,7 +10,13 @@ keywords = list()
 
 for x in data: 
     for y in x: 
-        keywords.append(singularize(y.lower().replace(" ","")))
+        t = y.lower().replace(" ","")
+        tsingle = p.singular_noun(t)
+
+        if (tsingle != False): 
+            keywords.append(tsingle)
+        else: 
+            keywords.append(t)
 
 def getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -53,7 +61,11 @@ def extractingredients(ingredients):
     
     ingredients = list()
     for ingredient in finalingredients: 
-        ingredients.append(singularize(ingredient))
+        translated = p.singular_noun(ingredient)
+        if (translated != False): 
+            ingredients.append(translated)
+        else: 
+            ingredients.append(ingredient)
 
     return ingredients
 
