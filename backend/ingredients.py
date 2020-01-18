@@ -8,7 +8,7 @@ keywords = list()
 
 for x in data: 
     for y in x: 
-        keywords.append(singularize(y.lower()))
+        keywords.append(singularize(y.lower().replace(" ","")))
 
 def getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -43,7 +43,7 @@ def extractingredients(ingredients):
     ingredients = list()
 
     for x in finalingredients: 
-        ingredients.append(singularize(x))
+        ingredients.append(singularize(x).replace(" ",""))
     return ingredients
 
 def filteringredients(ingredient): 
