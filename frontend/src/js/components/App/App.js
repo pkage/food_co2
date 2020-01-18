@@ -2,6 +2,7 @@ import React, {
     useState
 } from 'react'
 import ScannerContainer from '../Scanner/ScannerContainer'
+import Sidebar from '../Sidebar/Sidebar'
 
 const App = () => {
     const [results, setResults] = useState([])
@@ -10,8 +11,9 @@ const App = () => {
 
     
     return (
-        //        <Scanner onDetected={res => console.log(res)}/>
-        <ScannerContainer/>
+        //        <ScannerContainer onDetected={res => console.log(res)}/>
+
+        <Sidebar/>
     )
 }
 

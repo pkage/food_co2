@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './components/App/App.js'
 
-import '../css/colors.css';
+import '../css/base.css';
 
 import { Provider } from 'react-redux'
 import configureStore from './store'
