@@ -768,6 +768,11 @@
         "co2":13.5
     },
     {
+        "keywords":["yogurt"],
+        "categories":["dairy"],
+        "co2":12.5
+    },
+    {
         "keywords":["pork"],
         "categories":["meat", "protein"],
         "co2":12.1
