@@ -22,20 +22,24 @@ def getingredients(barcode):
         ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
-
+        print(ingredients)
         ingredients = list(filter(filteringredients, ingredients))
         
         return ingredients
 
 def extractingredients(ingredients): 
     finalingredients = list()
-    if len(ingredients) > 1: 
+    
+    if len(ingredients) == 1: 
         for ingredient in ingredients: 
             finalingredients.append(ingredient['text'].lower())
 
-    else: 
+    elif (len(ingredients) > 1): 
         finalingredients = ingredients[0]['text'].lower().split(' ')
    
+    else:
+        return []
+
     ingredients = list()
 
     for x in finalingredients: 
@@ -46,6 +50,4 @@ def filteringredients(ingredient):
     return (ingredient in keywords)
 
 if(__name__== "__main__"): 
-    print(getingredients("51000005"))
-    print(getingredients("51000001"))
-    print(getingredients("5060088701942"))
+    print(getingredients("5010044002378"))
