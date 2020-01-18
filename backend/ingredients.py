@@ -18,7 +18,7 @@ for x in data:
         else: 
             keywords.append(t)
 
-def getingredients(barcode): 
+def __getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
     
     if(int(product['status']) == 0): 
@@ -34,12 +34,18 @@ def getingredients(barcode):
         
         ingredients = remduplicates(ingredients)
 
-        return ingredients
+        return {"ingredients": ingredients, "quantity": quantity}
+
+def getingredients(barcode):
+    return __getingredients(barcode)["ingredients"]
+
+def getingredientswithquantity(barcode):
+    return __getingredients(barcode)
 
 def extractingredients(ingredients): 
     finalingredients = list()
     
-    print(ingredients)
+    #print(ingredients)
 
     if len(ingredients) > 1: 
         for ingredient in ingredients: 
