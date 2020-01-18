@@ -1,19 +1,20 @@
 import openfoodfacts
 import json
-from pattern.en import singularize
+# from pattern.en import singularize
 
-with open('keywords.json') as f:
-  data = json.load(f)
-keywords = list()
+with open('/Users/findlaysmith/Documents/food_co2/backend/keywords.json') as f:
+    data = json.load(f)
+keywords = data
 
-for x in data: 
-    for y in x: 
-        keywords.append(singularize(y.lower().replace(" ","")))
+# for x in data:
+#     for y in x:
+#         keywords.append(singularize(y.lower().replace(" ", "")))
 
-def getingredients(barcode): 
+
+def getingredients(barcode):
     product = openfoodfacts.products.get_product(barcode)
-    
-    if(int(product['status']) == 0): 
+
+    if(int(product['status']) == 0):
         print(product['status_verbose'])
         return []
     else:
@@ -23,51 +24,55 @@ def getingredients(barcode):
 
         ingredients = extractingredients(ingredients)
         ingredients = list(filter(filteringredients, ingredients))
-        
+
         ingredients = remduplicates(ingredients)
 
         return ingredients
 
-def extractingredients(ingredients): 
+
+def extractingredients(ingredients):
     finalingredients = list()
-    
-    if len(ingredients) > 1: 
-        for ingredient in ingredients: 
+
+    if len(ingredients) > 1:
+        for ingredient in ingredients:
             finalingredients.append(ingredient['text'].lower())
-        
+
         ingredients = finalingredients
         finalingredients = list()
 
-        for ingredient in ingredients: 
+        for ingredient in ingredients:
             finalingredients.append(ingredient)
-            if " " in ingredient: 
+            if " " in ingredient:
                 i = ingredient.split(" ")
-                for x in i: 
+                for x in i:
                     finalingredients.append(x)
 
-    elif (len(ingredients) == 1): 
+    elif (len(ingredients) == 1):
         finalingredients = ingredients[0]['text'].lower().split(' ')
-   
+
     else:
         return []
-    
-    ingredients = list()
-    for ingredient in finalingredients: 
-        ingredients.append(singularize(ingredient))
 
-    return ingredients
+    # ingredients = list()
+    # for ingredient in finalingredients:
+    #     ingredients.append(singularize(ingredient))
 
-def filteringredients(ingredient): 
+    return finalingredients
+
+
+def filteringredients(ingredient):
     return (ingredient in keywords)
 
-def remduplicates(input): 
+
+def remduplicates(input):
     result = list()
 
-    for x in input: 
-        if not (x in result): 
+    for x in input:
+        if not (x in result):
             result.append(x)
 
     return result
 
-if(__name__== "__main__"): 
+
+if(__name__ == "__main__"):
     print(getingredients("51000005"))
