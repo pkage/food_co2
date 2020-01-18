@@ -1,6 +1,7 @@
 import ingredients
 import json
 from pattern.en import singularize
+import sys
 
 with open('pollution.json') as f:
     __data = json.load(f)
@@ -15,21 +16,23 @@ def f(prevsum, curr, x):
 
 def get_min_max(carr):
     if len(carr) == 0:
-        return {"min":0, "max":0}
+        return {"min":0, "max":0,
+                "min_mi": 1, "max_mi": 1}
     if len(carr) == 1:
         return {"min":carr[0], "max":carr[0],
-                "mi_min": 1, "mi_max": 1}
+                "min_mi": 1.0, "max_mi": 1.0}
     else:
         mm = get_min_max(carr[:-1])
         # min
         min_bound = 0.001
-        max_bound = mm["min_mi"]/(1+mm["min_mi"])
+        max_bound = mm["min_mi"]/(1.0+mm["min_mi"])
         vals = [f(mm["min"], carr[-1], min_bound),
                 f(mm["min"], carr[-1], max_bound)]
         v = (carr[-1] - mm["min"])
         if min_bound < v and v < max_bound:
             vals.append(f(mm["min"], carr[-1], v))
-        _min = vals.sort(key = lambda v: v["y"])[0]
+        vals.sort(key = lambda v: v["y"])
+        _min = vals[0]
 
         # max
         min_bound = 0.001
@@ -39,10 +42,11 @@ def get_min_max(carr):
         v = (carr[-1] - mm["max"])
         if min_bound < v and v < max_bound:
             vals.append(f(mm["max"], carr[-1], v))
-        _max = vals.sort(key = lambda v: v["y"], reverse = True)[0]
+        vals.sort(key = lambda v: v["y"], reverse = True)
+        _max = vals[0]
 
         return {"min": _min["y"], "max": _max["y"],
-                "mi_min": _min["x"], "mi_max": _max["x"]}
+                "min_mi": _min["x"], "max_mi": _max["x"]}
         
 
 def get_carbon_footprint(barcode):
