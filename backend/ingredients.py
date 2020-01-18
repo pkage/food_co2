@@ -1,4 +1,15 @@
 import openfoodfacts
+import json
+from pattern.en import singularize
+
+with open('keywords.json') as f:
+  data = json.load(f)
+keywords = list()
+
+for x in data: 
+    for y in x: 
+        keywords.append(singularize(y.lower()))
+
 
 def getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -22,18 +33,23 @@ def extractingredients(ingredients):
     finalingredients = list()
     if len(ingredients) > 1: 
         for ingredient in ingredients: 
-            finalingredients.append(ingredient['text'])
+            finalingredients.append(ingredient['text'].lower())
 
     else: 
-        finalingredients = ingredients[0]['text'].split(' ')
-        
-    return finalingredients
+        finalingredients = ingredients[0]['text'].lower().split(' ')
+   
+    ingredients = list()
+
+    for x in finalingredients: 
+        ingredients.append(singularize(x))
+
+    return ingredients
 
 def filteringredients(ingredient): 
-    #Need to filter that in the ingredient list    
-    return True
+    return (ingredient in keywords)
 
 
 if(__name__== "__main__"): 
     print(getingredients("51000005"))
+    print(getingredients("51000001"))
     print(getingredients("5060088701942"))
