@@ -232,27 +232,24 @@
     },
     {
         "keywords": [
-            "Wheat Bran",
-            "bran",
-            "whole wheat bran",
             "wheat bran",
             "wheat"
         ],
-        "categories": ["vegetable", "carbohydrate"],
+        "categories": ["carbohydrate", "grain"],
         "co2": 0.56
     },
     {
         "keywords": [
             "Wheat Germ"
         ],
-        "categories": ["carbohydrate"],
+        "categories": ["carbohydrate", "grain"],
         "co2": 0.56
     },
     {
         "keywords": [
             "Barley"
         ],
-        "categories": ["carbohydrate"],
+        "categories": ["carbohydrate", "grain"],
         "co2": 0.55
     },
     {
@@ -628,14 +625,6 @@
     },
     {
         "keywords": [
-            "soya bean",
-            "soy bean"
-        ],
-        "categories": ["protein", "carbohydrate"],
-        "co2": 2.0
-    },
-    {
-        "keywords": [
             "nut"
         ],
         "categories":["snack", "protein", "nut"],
@@ -685,6 +674,14 @@
         ],
         "categories":["oil"],
         "co2": 1.8
+    },
+    {
+        "keywords": [
+            "soya bean",
+            "soy bean"
+        ],
+        "categories": ["protein", "carbohydrate"],
+        "co2": 2.0
     },
     {
         "keywords": [
