@@ -2,8 +2,9 @@ import Plot from "react-plotly.js";
 import React from "react";
 // import Graph from "../Graph/Graph";
 const Graph = props => {
-    const plot_props = {
-        data: [
+    let data = [];
+    if (props.data && Object.keys(props.data).length > 0) {
+        data = [
             {
                 type: "bar",
                 x: Object.keys(props.data),
@@ -22,20 +23,22 @@ const Graph = props => {
                     color: "green"
                 }
             }
-        ],
+        ];
+    }
+    const plot_props = {
+        data: data,
         layout: {
             autosize: true,
             responsive: true,
             barmode: "overlay",
-            margin: {b: 25, t: 25}
+            margin: { b: 25, t: 25 }
         }
     };
     const styles = {
-        height: '100%',
-        width:  '100%'
-    }
-    return <Plot {...plot_props} responsive={true} style={styles}/>;
+        height: "100%",
+        width: "100%"
+    };
+    return <Plot {...plot_props} responsive={true} style={styles} />;
 };
 
-export default Graph
-
+export default Graph;
