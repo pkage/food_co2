@@ -742,5 +742,10 @@
         "keywords":["quorn"],
         "categories":["protein"],
         "co2":1.2
+    },
+    {
+        "keywords":["yeast"],
+        "categories":["fermentation"],
+        "co2":3.204
     }
 ]
