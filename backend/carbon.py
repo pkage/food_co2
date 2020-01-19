@@ -1,7 +1,9 @@
 import ingredients
 import json
-from pattern.en import singularize
+import inflect 
 import sys
+
+p = inflect.engine()
 
 with open('pollution.json') as f:
     __data = json.load(f)
@@ -9,7 +11,12 @@ pollution = dict()
 
 for x in __data:
     for p in x["keywords"]:
-        pollution[singularize(p.lower())] = x["co2"]
+        t = p.singular_noun(p.lower())
+
+        if (t != False): 
+            pollution[t] = x["co2"]
+        else: 
+            pollution[p.lower()] = x["co2"]
 
 def f(prevsum, curr, x):
     return {"y": (1-x)*prevsum + x*curr, "x":x}
