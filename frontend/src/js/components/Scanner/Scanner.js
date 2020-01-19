@@ -39,7 +39,7 @@ class Scanner extends React.Component {
             },
             numOfWorkers: 2,
             decoder: {
-                readers : [ "code_128_reader", "ean_reader", "ean_8_reader", "upc_reader"]
+                readers : [ "code_128_reader", "ean_reader", "ean_8_reader"]
             },
             locate: true
         }, function(err) {
@@ -56,10 +56,10 @@ class Scanner extends React.Component {
     }
 
     _onDetected(result) {
-        /*
+        
         console.log(this.cref)
-        let cvas = (this.cref.current === null) ? document.querySelector('.
-        }
+        let cvas = (this.cref.current === null) ? document.querySelector('.ScannerCanvas__canvas') : this.cref.current
+
         const ctx = this.cref.current.getContext('2d')
         // Red rectangle
         ctx.clearRect(0,0,this.cref.current.width,this.cref.current.height)
@@ -87,10 +87,11 @@ class Scanner extends React.Component {
         ctx.strokeStyle = 'blue'
         drawBox(result.box)
         ctx.stroke()
-        */
 
-        Quagga.stop()
-        this.props.onDetected(result);
+        if (result.codeResult.startInfo.error < 0.25) {
+            Quagga.stop()
+            this.props.onDetected(result);
+        }
     }
 }
 

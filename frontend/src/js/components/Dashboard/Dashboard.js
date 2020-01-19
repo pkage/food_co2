@@ -31,10 +31,12 @@ const Dashboard = props => {
     useAuthenticated()
 
 
+        /*
     dashboard
         .get("entries")
         .toJS()
         .map((entry, i) => <Entry key={i} {...entry}/>)
+        */
 
     return (
         <Container className="Dashboard">

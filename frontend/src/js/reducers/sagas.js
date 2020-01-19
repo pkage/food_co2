@@ -11,7 +11,7 @@ const url = "https://hackcambridge.findoslice.com"
 /* --- DASHBOARD --- */
 
 function* resolveDashboard(token=null) {
-    const access_token = token || store.getState().scan.get('token')
+    const access_token = token || store.getState().auth.get('token')
     console.log('using token ' + access_token)
 
     const graph_data = yield fetch(url + "/api/user/daily", {
@@ -46,9 +46,10 @@ function* scanLookupRequest(action) {
     yield put(scanActions.requestLookup());
     console.log(action);
 
-    const access_token = store.getState().scan.get('token')
+    const access_token = store.getState().auth.get('token')
+    console.log(store)
 
-    const res = yield fetch(url + `/api/emissions/${action.code}?weight=${action.weight / 1000.0}`, {
+    const res = yield fetch(url + `/api/emissions/${action.code}/?weight=${action.weight / 1000.0}`, {
         headers: {
             Authorization: `JWT ${access_token}`
         },

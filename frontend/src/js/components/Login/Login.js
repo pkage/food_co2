@@ -28,7 +28,7 @@ const Login = props => {
 
     if (loggedIn) {
         // TODO tweak to point elsewhere
-        setLocation('/')
+        setLocation('/scan')
     }
 
     // submission helper
@@ -56,6 +56,7 @@ const Login = props => {
                         id="Login__password"
                         label="Password"
                         required
+                        type="password"
                         autoComplete="off"
                         value={password}
                         onChange={e => setPassword(e.target.value)}/>
