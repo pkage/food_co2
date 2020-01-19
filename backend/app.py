@@ -7,7 +7,9 @@ from backend.carbon import get_carbon_footprint
 from flask import request
 from flask_api import FlaskAPI, status
 from playhouse.flask_utils import FlaskDB
+from flask_cors import CORS
 app = FlaskAPI(__name__)
+CORS(app)
 db_wrapper = FlaskDB(app, 'sqlite:///my_app.db')
 from .models import *  # noqa
 
