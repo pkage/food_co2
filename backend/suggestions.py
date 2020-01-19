@@ -3,16 +3,23 @@ import json
 with open('backend/pollution.json') as f:
   data = json.load(f)
 
+  current = dict()
+
 
 #Will return a list of (original,[suggestions])
 def getsuggestions(ingredients): 
-    responses = list()
+    responses = dict()
+    responses['ingredients'] = list()
 
     for ingredient in ingredients: 
-        co2 = getco2(ingredient)
+        current = {}
+        current['co2'] = getco2(ingredient)
+        current['ingredient'] = ingredient
         categories = getcategories(ingredient)
-        suggestions = mostsimilar(categories, co2)
-        responses.append((ingredient, suggestions))
+        suggestions = mostsimilar(categories, current['co2'])
+
+        current['suggestions'] = suggestions
+        responses['ingredients'].append(current)
     
     return responses
 
@@ -30,19 +37,25 @@ def getco2(name):
 #Will return the set of names for the most similar 
 def mostsimilar(categories, co2):
     mostsim = 0.0
-    currentsim = []
+    currentsim = list()
 
     for item in data:    
         if item['co2'] < co2: 
             try:
                 sim = similar(categories, item['categories']) 
-                if (sim > 0.5):                    
+                if (sim > 0.5):  
                     if sim > mostsim: 
-                        currentsim = item['keywords']
+                        currentsim = []
                         mostsim = sim
-                    elif sim == mostsim: 
-                        currentsim = currentsim + item['keywords']
-                
+                    #    currentsim = item['keywords']
+                    #    mostsim = sim
+                    #elif sim == mostsim: 
+                    #    currentsim = currentsim + item['keywords']
+                    for i in item['keywords']: 
+                        curr = dict()
+                        curr['co2'] = item['co2']
+                        curr['suggestion'] = i
+                        currentsim.append(curr)
             except: 
                 pass
 
@@ -68,4 +81,4 @@ def similar(original, new):
 
 
 if(__name__== "__main__"): 
-    print(getsuggestions(["Asparagus"]))
+    print(getsuggestions(["Asparagus","beef"]))
