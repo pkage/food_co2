@@ -5,6 +5,8 @@ import sys
 
 p = inflect.engine()
 
+edge = 0.8
+
 with open('backend/pollution.json') as f:
     __data = json.load(f)
 pollution = dict()
@@ -34,7 +36,7 @@ def get_min_max(carr):
         mm = get_min_max(carr[:-1])
         # min
         min_bound = 0.001
-        max_bound = mm["min_mi"]/(1.0+mm["min_mi"])
+        max_bound = mm["min_mi"]/(1.0+mm["min_mi"]) * edge
         vals = [f(mm["min"], carr[-1], min_bound),
                 f(mm["min"], carr[-1], max_bound)]
         v = (carr[-1] - mm["min"])
@@ -45,7 +47,7 @@ def get_min_max(carr):
 
         # max
         min_bound = 0.001
-        mix_bound = mm["max_mi"]/(1+mm["max_mi"])
+        mix_bound = mm["max_mi"]/(1+mm["max_mi"]) * edge
         vals = [f(mm["max"], carr[-1], min_bound),
                 f(mm["max"], carr[-1], max_bound)]
         v = (carr[-1] - mm["max"])
