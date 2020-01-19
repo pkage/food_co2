@@ -487,9 +487,8 @@
     },
     {
         "keywords": [
-            "Lettuce",
-            "Iceberg"
-        ],
+            "Lettuce"
+                ],
         "categories": ["green", "vegetable"],
         "co2": 0.19
     },
