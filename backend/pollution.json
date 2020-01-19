@@ -96,7 +96,6 @@
     },
     {
         "keywords": [
-            "Cherries",
             "cherry"
         ],
         "categories": ["fruit", "berry", "snack"],
@@ -112,7 +111,6 @@
     },
     {
         "keywords": [
-            "Blueberries",
             "blueberry"
         ],
         "categories":["fruit", "berry"],
@@ -153,10 +151,8 @@
     },
     {
         "keywords": [
-            "Chickpeas",
             "chickpea",
             "garbanzo bean",
-            "garbanzo beans",
             "garbanzo"
         ],
         "categories": ["vegetable", "protein"],
@@ -188,24 +184,20 @@
     },
     {
         "keywords": [
-            "Cocoa Beans",
-            "cocoa",
-            "cocoa powder"
+            "cocoa"
         ],
         "categories": ["snack"],
         "co2": 0.57
     },
     {
         "keywords": [
-            "Peanut",
-            "peanuts"
+            "Peanut"
         ],
         "categories":["protein", "snack"],
         "co2": 0.57
     },
     {
         "keywords": [
-            "Black-eyed Peas",
             "black eyed peas",
             "black eye peas"
         ],
@@ -265,7 +257,6 @@
     },
     {
         "keywords": [
-            "Beans",
             "bean"
         ],
         "categories": ["protein", "carbohydrate"],
@@ -273,7 +264,6 @@
     },
     {
         "keywords": [
-            "Lentils",
             "lentil"
         ],
         "categories": ["protein", "carbohydrate"],
@@ -281,7 +271,6 @@
     },
     {
         "keywords": [
-            "Mussels",
             "mussel",
             "shellfish"
         ],
@@ -307,8 +296,6 @@
     },
     {
         "keywords": [
-            "Prunes",
-            "dates",
             "prune",
             "date"
         ],
@@ -343,7 +330,6 @@
     },
     {
         "keywords": [
-            "Pomegranates",
             "pomegranate"
         ],
         "categories": ["fruit", "snack"],
@@ -351,7 +337,6 @@
     },
     {
         "keywords": [
-            "Strawberries",
             "strawberry"
         ],
         "categories": ["fruit", "snack"],
@@ -359,7 +344,6 @@
     },
     {
         "keywords": [
-            "Artichokes",
             "Artichoke"
         ],
         "categories": ["vegetable", "green"],
@@ -368,11 +352,8 @@
     {
         "keywords": [
             "Bell Peppers",
-            "bell pepper",
             "bellpepper",
-            "bellpeppers",
             "pepper",
-            "peppers",
             "paprika"
         ],
         "categories": ["vegetable", "green", "snack"],
@@ -380,9 +361,6 @@
     },
     {
         "keywords": [
-            "Brussels Sprouts",
-            "brussels sprout",
-            "brussel sprout",
             "brussel sprouts"
         ],
         "categories": ["vegetable", "green"],
@@ -426,7 +404,6 @@
     },
     {
         "keywords": [
-            "Cherries",
             "cherry"
         ],
         "categories": ["fruit", "berry", "snack"],
@@ -442,9 +419,7 @@
     },
     {
         "keywords": [
-            "Apricots",
             "apricot",
-            "dried apricots",
             "dried apricot"
         ],
         "categories": ["fruit", "snack"],
@@ -452,7 +427,6 @@
     },
     {
         "keywords": [
-            "Tomatoes",
             "tomato"
         ],
         "categories": ["vegetable", "snack"],
@@ -460,7 +434,6 @@
     },
     {
         "keywords": [
-            "Nectarines",
             "nectarine"
         ],
         "categories": ["fruit", "snack"],
@@ -476,7 +449,6 @@
     },
     {
         "keywords": [
-            "Peaches",
             "peach"
         ],
         "categories": ["fruit", "berry", "snack"],
@@ -484,7 +456,6 @@
     },
     {
         "keywords": [
-            "Plums",
             "plum"
         ],
         "categories": ["fruit", "berry", "snack"],
@@ -494,9 +465,6 @@
         "keywords": [
             "Mandarin Oranges",
             "mandarin",
-            "mandarins",
-            "satsumas",
-            "clementines",
             "clementine",
             "Satsuma"
         ],
@@ -513,8 +481,7 @@
     },
     {
         "keywords": [
-            "Apples",
-            "apple"
+            "Apples"        
         ],
         "co2": 0.19
     },
@@ -608,7 +575,6 @@
     },
     {
         "keywords": [
-            "Vegetable Oils",
             "Vegetable oil"
         ],
         "categories":["vegetable", "oil"],
@@ -642,10 +608,7 @@
     },
     {
         "keywords": [
-            "Cream",
-            "heavy cream",
-            "double cream",
-            "whipping cream"
+            "Cream"
         ],
         "categories":["dairy"],
         "co2": 2.4
@@ -659,7 +622,6 @@
     },
     {
         "keywords": [
-            "Coconuts",
             "coconut"
         ],
         "categories": ["nut", "snack"],
@@ -667,9 +629,7 @@
     },
     {
         "keywords": [
-            "Soyabeans",
             "soya bean",
-            "soybeans",
             "soy bean"
         ],
         "categories": ["protein", "carbohydrate"],
@@ -677,7 +637,6 @@
     },
     {
         "keywords": [
-            "nuts",
             "nut"
         ],
         "categories":["snack", "protein", "nut"],
@@ -685,8 +644,7 @@
     },
     {
         "keywords": [
-            "Pineapples",
-            "pineapple"
+            "Pineapple"
         ],
         "categories": ["fruit", "snack"],
         "co2": 1.9
@@ -714,8 +672,7 @@
     },
     {
         "keywords": [
-            "Cereals",
-            "Cereal"
+            "Cereals"
         ],
         "categories":["grain", "carbohydrate"],
         "co2": 1.8
@@ -732,7 +689,6 @@
     },
     {
         "keywords": [
-            "Plantains",
             "plantain"
         ],
         "categories":["fruit", "carbohydrate"],
@@ -794,12 +750,12 @@
         "co2":6.9
     },
     {
-        "keywords":["tuna", "canned tuna"],
+        "keywords":["tuna"],
         "categories":["meat", "protein"],
         "co2":6.1
     },
     {
-        "keywords":["egg", "eggs"],
+        "keywords":["eggs"],
         "categories":["dairy", "protein"],
         "co2":4.8
     },
