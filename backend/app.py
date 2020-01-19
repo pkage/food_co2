@@ -4,6 +4,8 @@ from peewee import *
 from backend.ingredients import getingredients
 from .product import containspalm, getname
 from backend.carbon import get_carbon_footprint, get_car_footprint
+from backend.train import calctrainfromdistance
+from backend.plane import calcflightfromdistance
 from flask import request
 from flask_api import FlaskAPI, status
 from playhouse.flask_utils import FlaskDB
@@ -72,6 +74,45 @@ def car_emissions():
         "emissions": footprint
     }
 
+@app.route("/trains/emissions", methods=["GET"])
+@jwt_required()
+def train_emissions(): 
+    footprint = calctrainfromdistance(request.args.get("distance"))
+    EmissionsEntry.create(
+        user=current_identity.id,
+        barcode="train",
+        min_total_emissions=footprint,
+        max_total_emissions=footprint,
+        min_emissions_per_kg=footprint/int(request.args.get("distance")),
+        max_emissions_per_kg=footprint/int(request.args.get("distance")),
+        weight=int(request.args.get("distance")),
+        ingredients="",
+        name=request.args.get("Train"),
+        palm_oil=False
+    )
+    return {
+        "emissions": footprint
+    }
+
+@app.route("/planes/emissions", methods=["GET"])
+@jwt_required()
+def plane_emissions(): 
+    footprint = calcflightfromdistance(request.args.get("distance"))
+    EmissionsEntry.create(
+        user=current_identity.id,
+        barcode="plane",
+        min_total_emissions=footprint,
+        max_total_emissions=footprint,
+        min_emissions_per_kg=footprint/int(request.args.get("distance")),
+        max_emissions_per_kg=footprint/int(request.args.get("distance")),
+        weight=int(request.args.get("distance")),
+        ingredients="",
+        name=request.args.get("Plane"),
+        palm_oil=False
+    )
+    return {
+        "emissions": footprint
+    }
 
 @app.route("/emissions/<string:barcode>/", methods=["GET"])
 @jwt_required()
@@ -171,7 +212,7 @@ def daily_totals():
 @app.route("/user/new", methods=["POST"])
 def new_user():
     """
-        once again, fucking self explanatory
+        once again, f*****g self explanatory
         request body should look like this:
         {
             username: suck,
