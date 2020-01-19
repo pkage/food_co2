@@ -54,12 +54,6 @@ const Dashboard = props => {
                 />
             </div>
             <div className="Dashboard__events">
-                <div className="Dashboard__side"></div>
-                <div className="Dashboard__feed">
-                    {dashboard.entries.map(el => {
-                        <Entry {...el} />;
-                    })}
-                </div>
             </div>
         </Container>
     );
