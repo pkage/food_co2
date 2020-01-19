@@ -39,14 +39,14 @@ def identity(payload):
 jwt = JWT(app, authenticate, identity)
 
 
-@app.route("/", methods=["GET"])
+@app.route("/api/", methods=["GET"])
 @jwt_required()
 def root():
     print(current_identity)
     return []
 
 
-@app.route("/ingredients/<string:key>/", methods=["GET"])
+@app.route("/api/ingredients/<string:key>/", methods=["GET"])
 def ingredients(key):
     ingredients = getingredients(key)
     return {
@@ -54,7 +54,7 @@ def ingredients(key):
     }
 
 
-@app.route("/cars/emissions", methods=["GET"])
+@app.route("/api/cars/emissions", methods=["GET"])
 @jwt_required()
 def car_emissions():
     footprint = get_car_footprint(request.args.get("model"), request.args.get("distance"))
@@ -74,9 +74,10 @@ def car_emissions():
         "emissions": footprint
     }
 
-@app.route("/trains/emissions", methods=["GET"])
+
+@app.route("/api/trains/emissions", methods=["GET"])
 @jwt_required()
-def train_emissions(): 
+def train_emissions():
     footprint = calctrainfromdistance(request.args.get("distance"))
     EmissionsEntry.create(
         user=current_identity.id,
@@ -94,9 +95,10 @@ def train_emissions():
         "emissions": footprint
     }
 
-@app.route("/planes/emissions", methods=["GET"])
+
+@app.route("/api/planes/emissions", methods=["GET"])
 @jwt_required()
-def plane_emissions(): 
+def plane_emissions():
     footprint = calcflightfromdistance(request.args.get("distance"))
     EmissionsEntry.create(
         user=current_identity.id,
@@ -114,7 +116,8 @@ def plane_emissions():
         "emissions": footprint
     }
 
-@app.route("/emissions/<string:barcode>/", methods=["GET"])
+
+@app.route("/api/emissions/<string:barcode>/", methods=["GET"])
 @jwt_required()
 def emissions(barcode):
     """
@@ -132,16 +135,17 @@ def emissions(barcode):
         }
     """
     cached_emissions_entry = EmissionsList.get_or_none(barcode=barcode)
+    weight = float(request.args.get("weight"))
     if cached_emissions_entry is not None:
-        response = cached_emissions_entry.to_dict()
+        response = cached_emissions_entry.to_dict(weight=weight)
         EmissionsEntry.create(
             user=current_identity.id,
             barcode=barcode,
-            min_total_emissions=cached_emissions_entry.min_emissions_per_kg*cached_emissions_entry.weight,
-            max_total_emissions=cached_emissions_entry.max_emissions_per_kg*cached_emissions_entry.weight,
+            min_total_emissions=cached_emissions_entry.min_emissions_per_kg*weight,
+            max_total_emissions=cached_emissions_entry.max_emissions_per_kg*weight,
             min_emissions_per_kg=cached_emissions_entry.min_emissions_per_kg,
             max_emissions_per_kg=cached_emissions_entry.max_emissions_per_kg,
-            weight=cached_emissions_entry.weight,
+            weight=weight,
             ingredients=cached_emissions_entry.ingredients,
             name=getname(barcode),
             palm_oil=containspalm(barcode)
@@ -152,11 +156,11 @@ def emissions(barcode):
         emmissions_entry = EmissionsEntry.create(
             user=current_identity.id,
             barcode=barcode,
-            min_total_emissions=emissions["min_per_kg"]*emissions["weight_in_kg"],
-            max_total_emissions=emissions["max_per_kg"]*emissions["weight_in_kg"],
+            min_total_emissions=emissions["min_per_kg"]*weight,
+            max_total_emissions=emissions["max_per_kg"]*weight,
             min_emissions_per_kg=emissions["min_per_kg"],
             max_emissions_per_kg=emissions["max_per_kg"],
-            weight=emissions["weight_in_kg"],
+            weight=weight,
             ingredients=str(ingredients),
             name=getname(barcode),
             palm_oil=containspalm(barcode)
@@ -169,14 +173,14 @@ def emissions(barcode):
             min_emissions_per_kg=emissions["min_per_kg"],
             max_emissions_per_kg=emissions["max_per_kg"],
             ingredients=str(ingredients),
-            weight=emissions["weight_in_kg"],
+            weight=weight,
             name=getname(barcode),
             palm_oil=containspalm(barcode)
         )
     return response
 
 
-@app.route("/user/entries", methods=["GET"])
+@app.route("/api/user/entries", methods=["GET"])
 @jwt_required()
 def entries():
     entries = []
@@ -189,7 +193,7 @@ def entries():
     }
 
 
-@app.route("/user/daily", methods=["GET"])
+@app.route("/api/user/daily", methods=["GET"])
 @jwt_required()
 def daily_totals():
     dates = {}
@@ -209,7 +213,7 @@ def daily_totals():
     return res
 
 
-@app.route("/user/new", methods=["POST"])
+@app.route("/api/user/new", methods=["POST"])
 def new_user():
     """
         once again, f*****g self explanatory

@@ -6,9 +6,13 @@ import * as authTypes from "../constants/auth";
 
 import { store } from "../index";
 
+const url = "http://127.0.0.1:5000";
+
+function* getDashboard () {}
+
 /* --- LOOKUP FUNCTIONS --- */
 
-const url = "http://127.0.0.1:5000";
+
 
 function* scanLookupRequest(action) {
     yield put(scanActions.requestLookup())
