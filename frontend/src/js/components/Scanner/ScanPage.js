@@ -19,7 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { useAuthenticated } from '../../utils'
 
 const ScanPage = props => {
-    useAuthenticated()
+    //useAuthenticated()
     const [location, setLocation] = useLocation()
     const dispatch = useDispatch()
     const pendingResult = useSelector( state => state.scan.get('responsePending') )

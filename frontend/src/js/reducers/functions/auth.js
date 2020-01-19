@@ -44,7 +44,7 @@ export default function scan(state=defaultAuth, action, opt_reducer=AuthReducer)
     switch (action.type) {
         case authTypes.AUTH_LOGIN_REQUESTED:
             return opt_reducer.requestLogin(state, action)
-        case authTypes.AUTH_LOGIN_SUCCESSFUL:
+        case authTypes.AUTH_LOGIN_SUCCESS:
             return opt_reducer.setToken(state, action)
         case authTypes.AUTH_LOGIN_FAILURE:
             return opt_reducer.setFailure(state, action)

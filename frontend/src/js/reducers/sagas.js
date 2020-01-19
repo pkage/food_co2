@@ -6,24 +6,27 @@ import * as authTypes from "../constants/auth";
 
 import { store } from "../index";
 
-const url = "http://127.0.0.1:5000";
-const access_token = null;
+const url = "https://hackcambridge.findoslice.com"
 
 /* --- DASHBOARD --- */
 
-function* resolveDashboard() {
+function* resolveDashboard(token=null) {
+    const access_token = token || store.getState().scan.get('token')
+    console.log('using token ' + access_token)
+
     const graph_data = yield fetch(url + "/api/user/daily", {
         headers: {
-            Authorization: `JWT ${access_tokne}`
+            Authorization: `JWT ${access_token}`
         },
         method: "GET"
     }).then(r => r.json());
     const entries_res = yield fetch(url + "/api/user/entries", {
         headers: {
-            Authorization: `JWT ${access_tokne}`
+            Authorization: `JWT ${access_token}`
         },
         method: "GET"
     }).then(r => r.json());
+
     yield put(
         scanActions.setDashboard({
             data: graph_data,
@@ -57,6 +60,7 @@ function* watchScanLookupRequests() {
 function* handleLoginRequests(action) {
     yield put(authActions.loginClear());
 
+
     let res;
     try {
         res = yield fetch(url + "/auth", {
@@ -74,12 +78,13 @@ function* handleLoginRequests(action) {
         res = null;
     }
 
-    yield resolveDashboard();
 
     // TODO: replace with real login
     if (res !== null && res.status == 200) {
         // success
-        yield put(authActions.loginSuccess(res.json().access_token));
+        const token = (yield res.json()).access_token
+        yield resolveDashboard(token)
+        yield put(authActions.loginSuccess(token));
     } else {
         yield put(authActions.loginFailure("didn't work chief"));
         yield delay(5000);

@@ -16,10 +16,10 @@ export const resolveLookup = response => ({
 })
 
 export const getDashboard = () => ({
-    type: scanTypes.getDashboard
+    type: scanTypes.SCAN_GET_DASHBOARD
 })
 
 export const setDashboard = data => ({
-    type: scanTypes.setDashboard,
+    type: scanTypes.SCAN_SET_DASHBOARD,
     data
 })
