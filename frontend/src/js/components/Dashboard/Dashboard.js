@@ -8,6 +8,7 @@ import "./Dashboard.css";
 
 import { useLocation } from "wouter";
 import { useSelector } from "react-redux";
+import { useAuthenticated } from "../../utils";
 
 const Entry = props => {
     return (
@@ -27,6 +28,7 @@ const Entry = props => {
 
 const Dashboard = props => {
     const dashboard = useSelector(state => state.scan.get("dashboard"));
+    useAuthenticated()
 
     dashboard
         .get("")
