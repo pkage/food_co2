@@ -19,6 +19,7 @@ for x in data:
             keywords.append(t)
         
         #keywords.append(t)
+        print(keywords)
 
 def __getingredients(barcode): 
     product = openfoodfacts.products.get_product(barcode)
@@ -32,7 +33,12 @@ def __getingredients(barcode):
         ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
+
+        print(ingredients)
+
         ingredients = list(filter(filteringredients, ingredients))
+
+        print(ingredients)
 
         ingredients = remduplicates(ingredients)
 
@@ -87,6 +93,7 @@ def extractingredients(ingredients):
 
 
 def filteringredients(ingredient):
+    ingredient = ingredient.replace(" ","")
     return (ingredient in keywords)
 
 
@@ -100,4 +107,4 @@ def remduplicates(input):
     return result
 
 if(__name__== "__main__"): 
-    print(__getingredients("51000005"))
+    print(__getingredients("00819060"))
