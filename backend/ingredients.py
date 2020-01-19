@@ -25,7 +25,7 @@ def __getingredients(barcode):
 
     if(int(product['status']) == 0):
         print(product['status_verbose'])
-        return []
+        return {"ingredients":[], "quantity": "0 g"}
     else:
         product = product['product']
 
