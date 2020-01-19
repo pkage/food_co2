@@ -8,11 +8,18 @@ import { store } from "../index";
 
 const url = "http://127.0.0.1:5000";
 
-function* getDashboard () {}
+/* --- DASHBOARD --- */
+
+function* resolveDashboard () {
+    // TODO...
+    yield put(scanActions.setDashboard({}))
+}
+
+function* watchDashboard() {
+    yield takeLatest(scanTypes.SCAN_GET_DASHBOARD, resolveDashboard);
+}
 
 /* --- LOOKUP FUNCTIONS --- */
-
-
 
 function* scanLookupRequest(action) {
     yield put(scanActions.requestLookup())
@@ -50,6 +57,8 @@ function* handleLoginRequests(action) {
     } catch (e) {
         res = null
     }
+
+    yield resolveDashboard()
 
     // TODO: replace with real login
     if (res !== null && res.status == 200) {
