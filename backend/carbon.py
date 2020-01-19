@@ -11,6 +11,9 @@ with open('backend/pollution.json') as f:
     __data = json.load(f)
 pollution = dict()
 
+with open('backend/cars.json') as infile:
+    cars_dict = json.load(infile)
+
 for x in __data:
     for keyword in x["keywords"]:
         t = p.singular_noun(keyword.lower())
@@ -92,6 +95,10 @@ def get_carbon_footprint(barcode):
     return {"min_per_kg": mm["min"],
             "max_per_kg": mm["max"],
             "weight_in_kg": weight}
+
+
+def get_car_footprint(model, distance):
+    return cars_dict[model]*int(distance)
 
 
 if __name__ == "__main__":

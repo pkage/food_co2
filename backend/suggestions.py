@@ -24,7 +24,6 @@ def getsuggestions(ingredients):
     
     return responses
 
-
 def getcategories(name):
     for group in data:
         if name in group['keywords']:
@@ -76,11 +75,15 @@ def prunesuggestions(suggestions):
 
     suggestions = sorted(suggestions, key=lambda k: k['co2']) 
 
-    final = suggestions[:2]
+    final = [suggestions[0]]
+
+    index = int(len(suggestions) / 2)
+
+    final.append(suggestions[index])
+
     final.append(suggestions[-1])
 
     return final
-
 
 def similar(original, new):
     hit = 0.0
