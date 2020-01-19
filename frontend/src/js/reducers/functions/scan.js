@@ -27,6 +27,13 @@ class ScanReducer {
         state = state.set('responsePending', false)
         return state.set('response', fromJS(action.response))
     }
+
+    /**
+     * Set dashboard
+     */ 
+    static setDashboard(state, action) {
+        return state.set('dashboard', fromJS(action.data))
+    }
 }
 
 export default function scan(state=defaultScan, action, opt_reducer=ScanReducer) {
@@ -37,6 +44,8 @@ export default function scan(state=defaultScan, action, opt_reducer=ScanReducer)
             return opt_reducer.requestLookup(state, action)
         case scanTypes.SCAN_LOOKUP_RESOLVED:
             return opt_reducer.resolveLookup(state, action)
+        case scanTypes.SCAN_SET_DASHBOARD:
+            return opt_reducer.setDashboard(state, action)
         default:
             return state
     }

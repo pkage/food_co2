@@ -24,13 +24,17 @@ const Graph = props => {
             }
         ],
         layout: {
-            width: 640,
-            height: 480,
-            title: "A Fancy Plot",
-            barmode: "overlay"
+            autosize: true,
+            responsive: true,
+            barmode: "overlay",
+            margin: {b: 25, t: 25}
         }
     };
-    return <Plot {...plot_props} />;
+    const styles = {
+        height: '100%',
+        width:  '100%'
+    }
+    return <Plot {...plot_props} responsive={true} style={styles}/>;
 };
 
 export default Graph

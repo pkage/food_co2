@@ -22,6 +22,8 @@
 
     --sidebar-width: 15em;
     --button-size:   40px;
+
+    z-index: 1000;
 }
 
 .Sidebar--active {
