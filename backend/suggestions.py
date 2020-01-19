@@ -52,11 +52,18 @@ def mostsimilar(categories, co2):
                     #    mostsim = sim
                     #elif sim == mostsim: 
                     #    currentsim = currentsim + item['keywords']
-                    for i in item['keywords']: 
-                        curr = dict()
-                        curr['co2'] = item['co2']
-                        curr['suggestion'] = i
-                        currentsim.append(curr)
+                    
+                    #for i in item['keywords']: 
+                    #    curr = dict()
+                    #    curr['co2'] = item['co2']
+                    #    curr['suggestion'] = i
+                    #    currentsim.append(curr)
+                    
+                    curr = dict()
+                    curr['co2'] = item['co2']
+                    curr['suggestion'] = item['keywords'][0]
+                    currentsim.append(curr)
+
             except: 
                 pass
 
