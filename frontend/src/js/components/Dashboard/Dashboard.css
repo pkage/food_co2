@@ -15,6 +15,16 @@
     margin-top: 10px;
 }
 
+@media (max-width: 768px) {
+    .Dashboard__events {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .Dashboard__side, .Dashboard__feed {
+        margin: 0 0 10px 0 !important;
+    }
+}
+
 .Dashboard__side {
     background-color: blue;
     margin-right: 5px;
