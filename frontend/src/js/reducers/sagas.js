@@ -14,13 +14,13 @@ const access_token = null;
 function* resolveDashboard() {
     const graph_data = yield fetch(url + "/api/user/daily", {
         headers: {
-            Authorization: `JWT ${access_tokne}`
+            Authorization: `JWT ${access_token}`
         },
         method: "GET"
     }).then(r => r.json());
     const entries_res = yield fetch(url + "/api/user/entries", {
         headers: {
-            Authorization: `JWT ${access_tokne}`
+            Authorization: `JWT ${access_token}`
         },
         method: "GET"
     }).then(r => r.json());
@@ -43,9 +43,14 @@ function* scanLookupRequest(action) {
     yield put(scanActions.requestLookup());
     console.log(action);
 
-    yield delay(1500);
+    const res = yield fetch(url + `api/emissions/${action.code}?weight=${action.weight / 1000.0}`, {
+        headers: {
+            Authorization: `JWT ${access_token}`
+        },
+        method: "GET"
+    }).then(r => r.json());
 
-    yield put(scanActions.resolveLookup(scanTypes.DEBUG_EXAMPLE_SCAN));
+    yield put(scanActions.resolveLookup(res));
 }
 
 function* watchScanLookupRequests() {
