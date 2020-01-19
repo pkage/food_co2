@@ -4,10 +4,8 @@
 
 
 def calcflightfromdistance(distance):
-    return distance * 0.158 * 2.7
-
-# Given in minutes and returns kg, based on uk gov figures
+    return (distance * 0.254)
 
 
-def calcflightfromtime(time):
-    return (float(time)/60.0) * 134 * 2.7
+if(__name__ == "__main__"):
+    print(calcflightfromdistance(400))
