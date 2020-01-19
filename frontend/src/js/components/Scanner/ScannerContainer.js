@@ -4,6 +4,9 @@ import React, {
     useLayoutEffect
 } from 'react'
 
+import './ScannerContainer.css'
+import Scanner from './Scanner'
+
 /**
  * Wraps the scanner so it lays out like display: block;
  */
@@ -13,14 +16,17 @@ const ScannerContainer = props => {
 
     useLayoutEffect(() => {
         console.log(ref.current)
-        const rect = ref.current.getBoundingClientRect()
+        setTimeout(() => {
+            const rect = ref.current.getBoundingClientRect()
+            console.log(rect)
 
-        setDimensions({width: rect.width, height: rect.height})
+            setDimensions({width: rect.width, height: rect.height})
+        }, 150)
     }, [])
 
     return (
         <div className="ScannerContainer" ref={ref}>
-            {(dimensions !== null) &&
+            {(dimensions !== null && dimensions.height !== 0) &&
                 <Scanner
                     onDetected={props.onDetected}
                     width={dimensions.width}

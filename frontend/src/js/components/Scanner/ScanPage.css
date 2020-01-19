@@ -1,0 +1,41 @@
+.ScanPage {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScanPage__stage1 {
+    width: 60vw;
+    height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+
+@media (max-width: 768px) {
+    .ScanPage {
+        justify-content: center;
+        align-items: stretch;
+    }
+
+    .ScanPage__stage1 {
+
+    }
+}
+
+.ScanPage__stage2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.ScanPage__stage2 > button {
+    margin-top: 1em;
+}

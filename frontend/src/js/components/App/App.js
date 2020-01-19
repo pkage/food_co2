@@ -8,7 +8,8 @@ import ScannerContainer from '../Scanner/ScannerContainer'
 import Sidebar from '../Sidebar/Sidebar'
 import Splash from '../Splash/Splash'
 import Login from '../Login/Login'
-import Scanner from '../Scanner/Scanner'
+import ScanPage from '../Scanner/ScanPage'
+import Dashboard from '../Dashboard/Dashboard'
 
 const App = () => {
     const [results, setResults] = useState([])
@@ -21,7 +22,12 @@ const App = () => {
         <>
             <Sidebar>
                 <Link href="/">splash</Link>
+                <br/>
                 <Link href="/login">login</Link>
+                <br/>
+                <Link href="/scan">scan</Link>
+                <br/>
+                <Link href="/dashboard">dashboard</Link>
             </Sidebar>
             <Route path="/">
                 <Splash/>
@@ -30,7 +36,10 @@ const App = () => {
                 <Login/>
             </Route>
             <Route path="/scan">
-                <Scanner width="640" height="480" onDetected={res => console.log(res)}/>
+                <ScanPage/>
+            </Route>
+            <Route path="/dashboard">
+                <Dashboard/>
             </Route>
         </>
     )

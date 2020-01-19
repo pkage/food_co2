@@ -5,6 +5,7 @@ class Scanner extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
+        console.log(props)
 
         this.cref = React.createRef()
     }
