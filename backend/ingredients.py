@@ -37,6 +37,9 @@ def __getingredients(barcode):
 
         ingredients = remduplicates(ingredients)
 
+        if not ("quantity" in product):
+            product["quantity"] = "1 kg"
+
         return {"ingredients": ingredients, "quantity": product["quantity"]}
 
 def getingredients(barcode):
