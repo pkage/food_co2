@@ -31,20 +31,25 @@ function* watchScanLookupRequests() {
 function* handleLoginRequests(action) {
     yield put(authActions.loginClear());
 
-    const res = yield fetch(url + "/auth", {
-        method: "POST",
-        body: JSON.stringify({
-            username: action.user,
-            password: action.pass
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    console.log(res);
+    let res;
+    try {
+        res = yield fetch(url + "/auth", {
+            method: "POST",
+            body: JSON.stringify({
+                username: action.user,
+                password: action.pass
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        console.log(res);
+    } catch (e) {
+        res = null
+    }
 
     // TODO: replace with real login
-    if (res.status == 200) {
+    if (res !== null && res.status == 200) {
         // success
         yield put(authActions.loginSuccess(res.json().access_token));
     } else {
