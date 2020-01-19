@@ -2,7 +2,7 @@ import { fromJS } from 'immutable'
 import * as auth from '../../constants/auth'
 
 export const defaultAuth = fromJS({
-    token: null,
+    token: 'DUMMY_TOKEN',
     pending: false,
     error: false,
     errorMessage: ''

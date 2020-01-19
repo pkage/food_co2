@@ -5,11 +5,16 @@ import {
     useLocation
 } from 'wouter'
 
+export const useLoginStatus = () => {
+    return useSelector( state => state.auth.get('token') !== null )
+}
+
 export const useAuthenticated = () => {
     const [location, setLocation] = useLocation()
-    const authToken               = useSelector( state => state.auth.get('token') )
+    const loggedIn = useLoginStatus()
+    console.log('login: ', loggedIn)
 
-    if (authToken === null && location !== '/') {
+    if (!loggedIn && location !== '/') {
         setLocation('/')
     }
 }

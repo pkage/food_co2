@@ -1,9 +1,9 @@
 from werkzeug.security import safe_str_cmp
 from flask_jwt import JWT, jwt_required, current_identity
 from peewee import *
-from .ingredients import getingredients
+from backend.ingredients import getingredients
 from .product import containspalm, getname
-from backend.carbon import get_carbon_footprint
+from backend.carbon import get_carbon_footprint, get_car_footprint
 from flask import request
 from flask_api import FlaskAPI, status
 from playhouse.flask_utils import FlaskDB
@@ -49,6 +49,27 @@ def ingredients(key):
     ingredients = getingredients(key)
     return {
         "ingredients": ingredients
+    }
+
+
+@app.route("/cars/emissions", methods=["GET"])
+@jwt_required()
+def car_emissions():
+    footprint = get_car_footprint(request.args.get("model"), request.args.get("distance"))
+    EmissionsEntry.create(
+        user=current_identity.id,
+        barcode="car",
+        min_total_emissions=footprint,
+        max_total_emissions=footprint,
+        min_emissions_per_kg=footprint/int(request.args.get("distance")),
+        max_emissions_per_kg=footprint/int(request.args.get("distance")),
+        weight=int(request.args.get("distance")),
+        ingredients="",
+        name=request.args.get("model"),
+        palm_oil=False
+    )
+    return {
+        "emissions": footprint
     }
 
 
