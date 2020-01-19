@@ -42,6 +42,7 @@ class EmissionsEntry(db_wrapper.Model):
     max_emissions_per_kg = FloatField(null=False)
     weight = FloatField()
     name = CharField()
+    palm_oil = BooleanField(default=False)
 
     def to_dict(self):
         return {
@@ -52,8 +53,8 @@ class EmissionsEntry(db_wrapper.Model):
             "min_total_emissions": self.min_emissions_per_kg*self.weight,
             "max_total_emissions": self.max_emissions_per_kg*self.weight,
             "weight_in_kg": self.weight,
-            "palm_oil": containspalm(self.barcode),
-            "created_at": self.submitted,
+            "palm_oil": self.palm_oil,
+            "created_at": self.submitted.isoformat(),
             "name": self.name
         }
 
@@ -72,6 +73,7 @@ class EmissionsList(db_wrapper.Model):
     ingredients = TextField(null=False)
     weight = FloatField(null=False)
     name = CharField()
+    palm_oil = BooleanField(default=False)
 
     def to_dict(self):
         return {
