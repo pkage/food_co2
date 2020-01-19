@@ -1,25 +1,37 @@
-import React from 'react'
+import React from "react";
 
-import Container from '@material-ui/core/Container'
-import Typography from '@material-ui/core/Typography'
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 
-import Graph from './Graph'
-import './Dashboard.css'
+import Graph from "./Graph";
+import "./Dashboard.css";
 
-import { useLocation } from 'wouter'
-import { useSelector } from 'react-redux'
+import { useLocation } from "wouter";
+import { useSelector } from "react-redux";
 
 const Entry = props => {
-    return (<p>hello</p>)
-}
+    return (
+        <>
+            <h2>{props.name}</h2>
+            <p>weight: {props.weight}</p>
+            <ul>
+                <li>max CO2/kg: {props.max_emissions_kg}</li>
+                <li>min CO2/kg: {props.min_emissions_kg}</li>
+                <li>max CO2 in this serving: {props.max_total_emissions}</li>
+                <li>min CO2 in this serving: {props.min_total_emissions}</li>
+            </ul>
+            <small style={{ color: props.palm_oil ? "red" : "black" }}>This product {props.palm_oil ? "contains" : "does not contain"} palm oil</small>
+        </>
+    );
+};
 
 const Dashboard = props => {
-    const dashboard = useSelector( state => state.scan.get('dashboard') )
-    
+    const dashboard = useSelector(state => state.scan.get("dashboard"));
+
     dashboard
-        .get('')
+        .get("")
         .toJS()
-        .map()
+        .map();
 
     return (
         <Container className="Dashboard">
@@ -39,11 +51,13 @@ const Dashboard = props => {
             <div className="Dashboard__events">
                 <div className="Dashboard__side"></div>
                 <div className="Dashboard__feed">
-                
+                    {dashboard.entries.map(el => {
+                        <Entry {...el} />;
+                    })}
                 </div>
             </div>
         </Container>
-    )
+    );
 };
 
 export default Dashboard;
