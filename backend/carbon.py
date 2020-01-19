@@ -79,22 +79,21 @@ def splitshit(quantity):
 def get_carbon_footprint(barcode):
     _ingreds = ingredients.getingredientswithquantity(barcode)
     ingreds = _ingreds["ingredients"]
-    quantity = splitshit(_ingreds["quantity"])
+    # quantity = splitshit(_ingreds["quantity"])
     scale = 1
-    if (quantity[1] == "ml" or quantity[1] == "g"):
-        scale = 0.001
-    if (quantity[1] == "cl" or quantity[1] == "dag"):
+    if "cl" in _ingreds["quantity"] or "dag" in _ingreds["quantity"]:
         scale = 0.01
-
-    weight = int(quantity[0]) * scale
+    elif "kg" in _ingreds["quantity"]:
+        scale = 1.0
+    elif "ml" in _ingreds["quantity"] or "g" in _ingreds["quantity"]:
+        scale = 0.01
 
     pollution_factors = [pollution[ingre] for ingre in ingreds]
 
     mm = get_min_max(pollution_factors)
 
     return {"min_per_kg": mm["min"],
-            "max_per_kg": mm["max"],
-            "weight_in_kg": weight}
+            "max_per_kg": mm["max"]}
 
 
 def get_car_footprint(model, distance):
