@@ -625,14 +625,6 @@
     },
     {
         "keywords": [
-            "soya bean",
-            "soy bean"
-        ],
-        "categories": ["protein", "carbohydrate"],
-        "co2": 2.0
-    },
-    {
-        "keywords": [
             "nut"
         ],
         "categories":["snack", "protein", "nut"],
@@ -682,6 +674,14 @@
         ],
         "categories":["oil"],
         "co2": 1.8
+    },
+    {
+        "keywords": [
+            "soya bean",
+            "soy bean"
+        ],
+        "categories": ["protein", "carbohydrate"],
+        "co2": 2.0
     },
     {
         "keywords": [
