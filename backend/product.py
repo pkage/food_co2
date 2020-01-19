@@ -20,8 +20,14 @@ def containspalm(barcode):
         print(product['status_verbose'])
         return False
     else:
-        product = product['product']
-        return ((product['ingredients_from_or_that_may_be_from_palm_oil_n'] + product['ingredients_from_palm_oil_n'])> 0)
+        palmoil = 0 
+        try: 
+            product = product['product']
+            palmoil += product['ingredients_from_or_that_may_be_from_palm_oil_n']
+            palmoil += product['ingredients_from_palm_oil_n']
+        except: 
+            pass
+        return (palmoil > 0)
         
 
 def printfields(barcode): 

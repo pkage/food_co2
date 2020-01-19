@@ -25,16 +25,20 @@ def __getingredients(barcode):
 
     if(int(product['status']) == 0):
         print(product['status_verbose'])
-        return []
+        return {"ingredients":[], "quantity": "0 g"}
     else:
         product = product['product']
 
         ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
+
         ingredients = list(filter(filteringredients, ingredients))
 
         ingredients = remduplicates(ingredients)
+
+        if not ("quantity" in product):
+            product["quantity"] = "1 kg"
 
         return {"ingredients": ingredients, "quantity": product["quantity"]}
 
@@ -87,6 +91,7 @@ def extractingredients(ingredients):
 
 
 def filteringredients(ingredient):
+    ingredient = ingredient.replace(" ","")
     return (ingredient in keywords)
 
 
@@ -100,4 +105,4 @@ def remduplicates(input):
     return result
 
 if(__name__== "__main__"): 
-    print(__getingredients("51000005"))
+    print(__getingredients("00819060"))
