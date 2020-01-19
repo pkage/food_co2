@@ -32,6 +32,7 @@ def __getingredients(barcode):
         ingredients = product['ingredients']
 
         ingredients = extractingredients(ingredients)
+
         ingredients = list(filter(filteringredients, ingredients))
 
         ingredients = remduplicates(ingredients)
@@ -90,6 +91,7 @@ def extractingredients(ingredients):
 
 
 def filteringredients(ingredient):
+    ingredient = ingredient.replace(" ","")
     return (ingredient in keywords)
 
 
@@ -103,4 +105,4 @@ def remduplicates(input):
     return result
 
 if(__name__== "__main__"): 
-    print(__getingredients("51000005"))
+    print(__getingredients("00819060"))
