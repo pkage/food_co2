@@ -11,16 +11,25 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
+import { useLoginStatus } from '../../utils'
+
 const Login = props => {
     // controlled form
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
+    const [location, setLocation] = useLocation()
     const dispatch = useDispatch();
 
     const isPending = useSelector( state => state.auth.get('pending') )
     const error = useSelector( state => state.auth.get('error') )
     const errorMessage = useSelector( state => state.auth.get('errorMessage') )
+    const loggedIn = useLoginStatus()
+
+    if (loggedIn) {
+        // TODO tweak to point elsewhere
+        setLocation('/')
+    }
 
     // submission helper
     const submit = e => {
