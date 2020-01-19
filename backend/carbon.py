@@ -5,7 +5,7 @@ import sys
 
 p = inflect.engine()
 
-edge = 0.8
+edge = 0.75
 
 with open('backend/pollution.json') as f:
     __data = json.load(f)

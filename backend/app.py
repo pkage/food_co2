@@ -2,6 +2,7 @@ from werkzeug.security import safe_str_cmp
 from flask_jwt import JWT, jwt_required, current_identity
 from peewee import *
 from .ingredients import getingredients
+from .product import containspalm, getname
 from backend.carbon import get_carbon_footprint
 from flask import request
 from flask_api import FlaskAPI, status
@@ -51,17 +52,38 @@ def ingredients(key):
 @app.route("/emissions/<string:barcode>/", methods=["GET"])
 @jwt_required()
 def emissions(barcode):
+    """
+        get emissions and other relevant information about a particular product.
+        Responses look like this: 
+        {
+            "barcode": "4251097403083",
+            "ingredients": ["bean"],
+            "max_emissions_per_kg": 26.941587267561104,
+            "min_emissions_per_kg": 4.412857142857144,
+            "max_total_emissions": 26.941587267561104,
+            "min_total_emissions": 4.412857142857144,
+            "weight_in_kg": 1
+            "palm_oil": true
+        }
+    """
     cached_emissions_entry = EmissionsList.get_or_none(barcode=barcode)
     if cached_emissions_entry is not None:
-        emissions = {
-            "min": cached_emissions_entry.min_emissions_per_kg,
-            "max": cached_emissions_entry.max_emissions_per_kg,
-            "barcode": cached_emissions_entry.barcode,
-            "ingredients": cached_emissions_entry.barcode
-        }
+        response = cached_emissions_entry.to_dict()
+        EmissionsEntry.create(
+            user=current_identity.id,
+            barcode=barcode,
+            min_total_emissions=cached_emissions_entry.min_emissions_per_kg*cached_emissions_entry.weight,
+            max_total_emissions=cached_emissions_entry.max_emissions_per_kg*cached_emissions_entry.weight,
+            min_emissions_per_kg=cached_emissions_entry.min_emissions_per_kg,
+            max_emissions_per_kg=cached_emissions_entry.max_emissions_per_kg,
+            weight=cached_emissions_entry.weight,
+            ingredients=cached_emissions_entry.ingredients,
+            name=getname(barcode)
+        )
     else:
         emissions = get_carbon_footprint(barcode)
-        EmissionsEntry.create(
+        ingredients = getingredients(barcode)
+        emmissions_entry = EmissionsEntry.create(
             user=current_identity.id,
             barcode=barcode,
             min_total_emissions=emissions["min_per_kg"]*emissions["weight_in_kg"],
@@ -69,15 +91,33 @@ def emissions(barcode):
             min_emissions_per_kg=emissions["min_per_kg"],
             max_emissions_per_kg=emissions["max_per_kg"],
             weight=emissions["weight_in_kg"],
-            ingredients=str(getingredients(barcode))
+            ingredients=str(ingredients),
+            name=getname(barcode)
         )
+        response = emmissions_entry.to_dict()
+        del response["created_at"]
         EmissionsList.create(
             barcode=barcode,
             min_emissions_per_kg=emissions["min_per_kg"],
             max_emissions_per_kg=emissions["max_per_kg"],
-            ingredients=str(getingredients(barcode))
+            ingredients=str(ingredients),
+            weight=emissions["weight_in_kg"],
+            name=getname(barcode)
         )
-    return emissions
+    return response
+
+
+@app.route("/user/entries", methods=["GET"])
+@jwt_required()
+def entries():
+    entries = []
+    for entry in current_identity.entries:
+        entries.append(entry.to_dict())
+    return {
+        "len": len(entries),
+        "products": list({e.name for e in current_identity.entries}),
+        "entries": entries
+    }
 
 
 @app.route("/user/new", methods=["POST"])

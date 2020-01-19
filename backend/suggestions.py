@@ -1,12 +1,11 @@
 import json
 
 with open('backend/pollution.json') as f:
-  data = json.load(f)
+    data = json.load(f)
 
-  current = dict()
+current = dict()
 
-
-#Will return a list of (original,[suggestions])
+#Will return a dictonary of suggestions
 def getsuggestions(ingredients): 
     responses = dict()
     responses['ingredients'] = list()
@@ -23,24 +22,26 @@ def getsuggestions(ingredients):
     
     return responses
 
-def getcategories(name): 
-    for group in data: 
-        if name in group['keywords']: 
+
+def getcategories(name):
+    for group in data:
+        if name in group['keywords']:
             return group['categories']
     return []
 
-def getco2(name): 
-    for group in data: 
-        if name in group['keywords']: 
+
+def getco2(name):
+    for group in data:
+        if name in group['keywords']:
             return group['co2']
 
-#Will return the set of names for the most similar 
+# Will return the dictonary for similar better items
 def mostsimilar(categories, co2):
     mostsim = 0.0
     currentsim = list()
 
-    for item in data:    
-        if item['co2'] < co2: 
+    for item in data:
+        if item['co2'] < co2:
             try:
                 sim = similar(categories, item['categories']) 
                 if (sim > 0.5):  
@@ -61,24 +62,24 @@ def mostsimilar(categories, co2):
 
     return currentsim
 
-def similar(original, new): 
-    hit = 0.0 
-    miss = 0.0 
 
-    for x in original: 
-        if x in new: 
-            hit += 1.0 
-        else: 
+def similar(original, new):
+    hit = 0.0
+    miss = 0.0
+
+    for x in original:
+        if x in new:
+            hit += 1.0
+        else:
             miss += 1.0
-    
-    for x in new: 
-        if x in original: 
-            hit += 1.0 
-        else: 
+
+    for x in new:
+        if x in original:
+            hit += 1.0
+        else:
             miss += 1.0
 
     return hit / (hit + miss)
 
-
-if(__name__== "__main__"): 
-    print(getsuggestions(["Asparagus","beef"]))
+if(__name__ == "__main__"):
+    print(getsuggestions(["Asparagus", "Sunflower Seed Oil", "Walnuts", "Mashed Potato"]))
