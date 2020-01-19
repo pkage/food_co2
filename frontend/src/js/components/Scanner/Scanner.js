@@ -56,7 +56,10 @@ class Scanner extends React.Component {
     }
 
     _onDetected(result) {
+        /*
         console.log(this.cref)
+        let cvas = (this.cref.current === null) ? document.querySelector('.
+        }
         const ctx = this.cref.current.getContext('2d')
         // Red rectangle
         ctx.clearRect(0,0,this.cref.current.width,this.cref.current.height)
@@ -84,6 +87,7 @@ class Scanner extends React.Component {
         ctx.strokeStyle = 'blue'
         drawBox(result.box)
         ctx.stroke()
+        */
 
         Quagga.stop()
         this.props.onDetected(result);

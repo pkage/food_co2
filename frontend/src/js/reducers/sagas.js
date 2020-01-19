@@ -46,7 +46,9 @@ function* scanLookupRequest(action) {
     yield put(scanActions.requestLookup());
     console.log(action);
 
-    const res = yield fetch(url + `api/emissions/${action.code}?weight=${action.weight / 1000.0}`, {
+    const access_token = store.getState().scan.get('token')
+
+    const res = yield fetch(url + `/api/emissions/${action.code}?weight=${action.weight / 1000.0}`, {
         headers: {
             Authorization: `JWT ${access_token}`
         },

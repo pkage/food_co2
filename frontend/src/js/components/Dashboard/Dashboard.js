@@ -30,10 +30,11 @@ const Dashboard = props => {
     const dashboard = useSelector(state => state.scan.get("dashboard"));
     useAuthenticated()
 
+
     dashboard
-        .get("")
+        .get("entries")
         .toJS()
-        .map();
+        .map((entry, i) => <Entry key={i} {...entry}/>)
 
     return (
         <Container className="Dashboard">
