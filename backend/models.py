@@ -33,8 +33,10 @@ class EmissionsEntry(db_wrapper.Model):
     barcode = CharField(null=False)
     submitted = DateTimeField(default=datetime.datetime.now)
     ingredients = TextField(null=False)
-    total_emissions = FloatField(null=False)
-    emissions_per_kg = FloatField(null=False)
+    min_total_emissions = FloatField(null=False)
+    max_total_emissions = FloatField(null=False)
+    min_emissions_per_kg = FloatField(null=False)
+    max_emissions_per_kg = FloatField(null=False)
     weight = FloatField()
 EmissionsEntry.create_table()
 
@@ -45,6 +47,7 @@ class EmissionsList(db_wrapper.Model):
     """
     barcode = CharField(null=False)
     last_updated = DateTimeField(default=datetime.datetime.now)
-    emissions_per_kg = FloatField(null=False)
+    min_emissions_per_kg = FloatField(null=False)
+    max_emissions_per_kg = FloatField(null=False)
     ingredients = TextField(null=False)
 EmissionsList.create_table()
