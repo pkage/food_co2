@@ -17,6 +17,8 @@ def getsuggestions(ingredients):
         categories = getcategories(ingredient)
         suggestions = mostsimilar(categories, current['co2'])
 
+        suggestions = prunesuggestions(suggestions)
+
         current['suggestions'] = suggestions
         responses['ingredients'].append(current)
     
@@ -28,7 +30,6 @@ def getcategories(name):
         if name in group['keywords']:
             return group['categories']
     return []
-
 
 def getco2(name):
     for group in data:
@@ -68,6 +69,17 @@ def mostsimilar(categories, co2):
                 pass
 
     return currentsim
+
+def prunesuggestions(suggestions): 
+    if (len(suggestions)) <= 3: 
+        return suggestions
+
+    suggestions = sorted(suggestions, key=lambda k: k['co2']) 
+
+    final = suggestions[:2]
+    final.append(suggestions[-1])
+
+    return final
 
 
 def similar(original, new):
