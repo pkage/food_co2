@@ -1,5 +1,6 @@
-####### Your carbon footprint calculator for food
-## Scan barcodes and have the the co2 impact calculated
+## Your carbon footprint calculator for food
+
+Scan barcodes and have the the co2 impact calculated!
 
 Built with react, flask and tears. 
 
