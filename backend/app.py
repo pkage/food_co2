@@ -8,6 +8,7 @@ from flask import request
 from flask_api import FlaskAPI, status
 from playhouse.flask_utils import FlaskDB
 from flask_cors import CORS
+import datetime
 app = FlaskAPI(__name__)
 CORS(app)
 db_wrapper = FlaskDB(app, 'sqlite:///my_app.db')
@@ -56,7 +57,7 @@ def ingredients(key):
 def emissions(barcode):
     """
         get emissions and other relevant information about a particular product.
-        Responses look like this: 
+        Responses look like this:
         {
             "barcode": "4251097403083",
             "ingredients": ["bean"],
@@ -80,7 +81,8 @@ def emissions(barcode):
             max_emissions_per_kg=cached_emissions_entry.max_emissions_per_kg,
             weight=cached_emissions_entry.weight,
             ingredients=cached_emissions_entry.ingredients,
-            name=getname(barcode)
+            name=getname(barcode),
+            palm_oil=containspalm(barcode)
         )
     else:
         emissions = get_carbon_footprint(barcode)
@@ -94,7 +96,9 @@ def emissions(barcode):
             max_emissions_per_kg=emissions["max_per_kg"],
             weight=emissions["weight_in_kg"],
             ingredients=str(ingredients),
-            name=getname(barcode)
+            name=getname(barcode),
+            palm_oil=containspalm(barcode)
+
         )
         response = emmissions_entry.to_dict()
         del response["created_at"]
@@ -104,7 +108,8 @@ def emissions(barcode):
             max_emissions_per_kg=emissions["max_per_kg"],
             ingredients=str(ingredients),
             weight=emissions["weight_in_kg"],
-            name=getname(barcode)
+            name=getname(barcode),
+            palm_oil=containspalm(barcode)
         )
     return response
 
@@ -120,6 +125,26 @@ def entries():
         "products": list({e.name for e in current_identity.entries}),
         "entries": entries
     }
+
+
+@app.route("/user/daily", methods=["GET"])
+@jwt_required()
+def daily_totals():
+    dates = {}
+    for entry in current_identity.entries:
+        if entry.submitted.date().isoformat() in dates:
+            dates[entry.submitted.date().isoformat()].append(entry.to_dict())
+        else:
+            dates[entry.submitted.date().isoformat()] = [entry.to_dict()]
+
+    res = {}
+    for date in dates:
+        res[date] = {
+            "max": sum([entry["max_total_emissions"] for entry in dates[date]]),
+            "min": sum([entry["min_total_emissions"] for entry in dates[date]]),
+            "count": len(dates[date])
+        }
+    return res
 
 
 @app.route("/user/new", methods=["POST"])
