@@ -39,7 +39,7 @@ class Scanner extends React.Component {
             },
             numOfWorkers: 2,
             decoder: {
-                readers : [ "code_128_reader"]
+                readers : [ "code_128_reader", "ean_reader", "ean_8_reader", "upc_reader", "upc_8_reader" ]
             },
             locate: true
         }, function(err) {
@@ -85,6 +85,7 @@ class Scanner extends React.Component {
         drawBox(result.box)
         ctx.stroke()
 
+        Quagga.stop()
         this.props.onDetected(result);
     }
 }

@@ -1,8 +1,9 @@
 import * as scanTypes from '../constants/scan'
 
-export const scanCode = code => ({
+export const scanCode = (code, weight) => ({
     type: scanTypes.SCAN_CODE_SCANNED,
-    code
+    code,
+    weight
 })
 
 export const requestLookup = () => ({

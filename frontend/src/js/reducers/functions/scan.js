@@ -10,7 +10,7 @@ class ScanReducer {
      * Scan a code (processed from barcode reader)
      */
     static scanCode(state, action) {
-        return state.set('current', action.code)
+        return state.set('current', fromJS({code: action.code, weight: action.weight}))
     }
 
     /**

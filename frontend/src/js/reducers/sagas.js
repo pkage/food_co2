@@ -11,19 +11,18 @@ import { store } from "../index";
 const url = "http://127.0.0.1:5000";
 
 function* scanLookupRequest(action) {
-    const code = store.scan.get("current");
+    yield put(scanActions.requestLookup())
+    console.log(action)
 
     yield delay(1500);
 
     yield put(
-        scanActions.resolveLookup({
-            key: "value"
-        })
+        scanActions.resolveLookup( scanTypes.DEBUG_EXAMPLE_SCAN )
     );
 }
 
 function* watchScanLookupRequests() {
-    yield takeLatest(scanTypes.SCAN_LOOKUP_REQUESTED, scanLookupRequest);
+    yield takeLatest(scanTypes.SCAN_CODE_SCANNED, scanLookupRequest);
 }
 
 /* --- LOGIN FUNCTIONS --- */

@@ -10,6 +10,7 @@ import Splash from '../Splash/Splash'
 import Login from '../Login/Login'
 import ScanPage from '../Scanner/ScanPage'
 import Dashboard from '../Dashboard/Dashboard'
+import ShowLookupResults from '../Results/Results'
 
 const App = () => {
     const [results, setResults] = useState([])
@@ -37,6 +38,9 @@ const App = () => {
             </Route>
             <Route path="/scan">
                 <ScanPage/>
+            </Route>
+            <Route path="/results">
+                <ShowLookupResults/>
             </Route>
             <Route path="/dashboard">
                 <Dashboard/>

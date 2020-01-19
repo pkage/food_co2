@@ -17,8 +17,8 @@ const Sidebar = props => {
 
     return (
         <div className={baseName}>
-            <div className="Sidebar__menucontainer">
-                <div className="Sidebar__menu">
+            <div className="Sidebar__menucontainer" >
+                <div className="Sidebar__menu" onClick={() => setActive(false)}>
                     {props.children}
                 </div>
                 <div className="Sidebar__button" onClick={() => setActive(!active)}>

@@ -1,6 +1,9 @@
 import React, {
     useState
 } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'wouter'
+import { scanCode } from '../../actions/scan'
 import './ScanPage.css'
 
 import Button from '@material-ui/core/button'
@@ -17,13 +20,24 @@ import { useAuthenticated } from '../../utils'
 
 const ScanPage = props => {
     useAuthenticated()
+    const [location, setLocation] = useLocation()
+    const dispatch = useDispatch()
+    const pendingResult = useSelector( state => state.scan.get('responsePending') )
 
     const [result, setResult] = useState(null)
-    const [weight, setWeight] = useState(1)
+    const [weight, setWeight] = useState(100)
     const submit = e => {
         e.preventDefault()
         console.log('submitting ', result, weight)
+        dispatch( scanCode(result.codeResult.code, weight) )
     }
+
+    if (pendingResult) {
+        setLocation('/results')
+        return null
+    }
+
+
 
     return (
         <div className="ScanPage">
@@ -36,13 +50,13 @@ const ScanPage = props => {
                         <Input
                             id="standard-adornment-weight"
                             value={weight}
-                            onChange={e => setWeight(e.target.weight)}
+                            onChange={e => setWeight(e.target.value)}
                             endAdornment={<InputAdornment position="end">g</InputAdornment>}
                         />
                         <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText>
                     </FormControl>
                     <Button variant="contained" color="primary" type="submit">
-                        Login
+                        Submit
                     </Button>
                 </form>
             }

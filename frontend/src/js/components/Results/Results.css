@@ -1,0 +1,41 @@
+.ResultOverview {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.ResultOverview__row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+
+}
+
+.ResultOverview__ingredients {
+    margin-top: 2em;
+    flex-wrap: wrap;
+}
+
+.EmissionsNumbers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+
+    margin-top: 1em;
+}
+
+@media (max-width: 768px) {
+    .EmissionsNumbers {
+        flex-direction: column;
+    }
+}
+
+.EmissionsNumbers__number {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
