@@ -7,12 +7,30 @@ import * as authTypes from "../constants/auth";
 import { store } from "../index";
 
 const url = "http://127.0.0.1:5000";
+const access_token = null;
 
 /* --- DASHBOARD --- */
 
-function* resolveDashboard () {
-    // TODO...
-    yield put(scanActions.setDashboard({}))
+function* resolveDashboard() {
+    const graph_data = yield fetch(url + "/api/user/daily", {
+        headers: {
+            Authorization: `JWT ${access_tokne}`
+        },
+        method: "GET"
+    }).then(r => r.json());
+    const entries_res = yield fetch(url + "/api/user/entries", {
+        headers: {
+            Authorization: `JWT ${access_tokne}`
+        },
+        method: "GET"
+    }).then(r => r.json());
+    yield put(
+        scanActions.setDashboard({
+            data: graph_data,
+            entries: entries_res["entries"],
+            products: entries_res["products"]
+        })
+    );
 }
 
 function* watchDashboard() {
@@ -22,14 +40,12 @@ function* watchDashboard() {
 /* --- LOOKUP FUNCTIONS --- */
 
 function* scanLookupRequest(action) {
-    yield put(scanActions.requestLookup())
-    console.log(action)
+    yield put(scanActions.requestLookup());
+    console.log(action);
 
     yield delay(1500);
 
-    yield put(
-        scanActions.resolveLookup( scanTypes.DEBUG_EXAMPLE_SCAN )
-    );
+    yield put(scanActions.resolveLookup(scanTypes.DEBUG_EXAMPLE_SCAN));
 }
 
 function* watchScanLookupRequests() {
@@ -55,10 +71,10 @@ function* handleLoginRequests(action) {
         });
         console.log(res);
     } catch (e) {
-        res = null
+        res = null;
     }
 
-    yield resolveDashboard()
+    yield resolveDashboard();
 
     // TODO: replace with real login
     if (res !== null && res.status == 200) {
@@ -76,5 +92,5 @@ function* watchLoginRequests() {
 }
 
 export default function* rootSaga() {
-    yield all([watchScanLookupRequests(), watchLoginRequests()]);
+    yield all([watchScanLookupRequests(), watchLoginRequests(), watchDashboard()]);
 }
