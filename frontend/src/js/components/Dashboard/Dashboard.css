@@ -1,0 +1,42 @@
+.Dashboard {
+    margin-top: 2rem;
+}
+
+.Dashboard__graph {
+    background-color: red;
+    height: 15em;
+}
+
+.Dashboard__events {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .Dashboard__events {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .Dashboard__side, .Dashboard__feed {
+        margin: 0 0 10px 0 !important;
+    }
+}
+
+.Dashboard__side {
+    background-color: blue;
+    margin-right: 5px;
+    flex-grow: 1;
+
+    height: 100px;
+}
+
+.Dashboard__feed {
+    background-color: green;
+    margin-left: 5px;
+    flex-grow: 2;
+
+    height: 1000px;
+}

@@ -2,6 +2,7 @@ from .app import db_wrapper
 from peewee import *  # noqa
 
 from .product import containspalm
+#from .suggestions import getsuggestions #Might not work
 
 
 import datetime
@@ -36,6 +37,7 @@ class EmissionsEntry(db_wrapper.Model):
     barcode = CharField(null=False)
     submitted = DateTimeField(default=datetime.datetime.now)
     ingredients = TextField(null=False)
+    #suggestions = TextField(null=False) #Might not work
     min_total_emissions = FloatField(null=False)
     max_total_emissions = FloatField(null=False)
     min_emissions_per_kg = FloatField(null=False)
@@ -44,15 +46,16 @@ class EmissionsEntry(db_wrapper.Model):
     name = CharField()
     palm_oil = BooleanField(default=False)
 
-    def to_dict(self):
+    def to_dict(self, weight=weight):
         return {
             "barcode": self.barcode,
             "ingredients": [el.strip(" []' ") for el in self.ingredients.split(",")],
+            #"suggestions": getsuggestions([el.strip(" []' ") for el in self.ingredients.split(",")]), #Might not work
             "min_emissions_per_kg": self.min_emissions_per_kg,
             "max_emissions_per_kg": self.max_emissions_per_kg,
-            "min_total_emissions": self.min_emissions_per_kg*self.weight,
-            "max_total_emissions": self.max_emissions_per_kg*self.weight,
-            "weight_in_kg": self.weight,
+            "min_total_emissions": self.min_emissions_per_kg*weight,
+            "max_total_emissions": self.max_emissions_per_kg*weight,
+            "weight_in_kg": weight,
             "palm_oil": self.palm_oil,
             "created_at": self.submitted.isoformat(),
             "name": self.name
@@ -71,19 +74,21 @@ class EmissionsList(db_wrapper.Model):
     min_emissions_per_kg = FloatField(null=False)
     max_emissions_per_kg = FloatField(null=False)
     ingredients = TextField(null=False)
+    #suggestions = TextField(null=False) #Might not work
     weight = FloatField(null=False)
     name = CharField()
     palm_oil = BooleanField(default=False)
 
-    def to_dict(self):
+    def to_dict(self, weight=weight):
         return {
             "barcode": self.barcode,
             "ingredients": [el.strip(" []' ") for el in self.ingredients.split(",")],
+            #"suggestions": getsuggestions([el.strip(" []' ") for el in self.ingredients.split(",")]), #Might not work
             "min_emissions_per_kg": self.min_emissions_per_kg,
             "max_emissions_per_kg": self.max_emissions_per_kg,
-            "min_total_emissions": self.min_emissions_per_kg*self.weight,
-            "max_total_emissions": self.max_emissions_per_kg*self.weight,
-            "weight_in_kg": self.weight,
+            "min_total_emissions": self.min_emissions_per_kg*weight,
+            "max_total_emissions": self.max_emissions_per_kg*weight,
+            "weight_in_kg": weight,
             "palm_oil": containspalm(self.barcode),
             "name": self.name
         }

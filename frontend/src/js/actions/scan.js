@@ -14,3 +14,12 @@ export const resolveLookup = response => ({
     type: scanTypes.SCAN_LOOKUP_RESOLVED,
     response
 })
+
+export const getDashboard = () => ({
+    type: scanTypes.getDashboard
+})
+
+export const setDashboard = data => ({
+    type: scanTypes.setDashboard,
+    data
+})

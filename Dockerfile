@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt-get update
 # RUN apt-get install build-essential -y
 
-COPY ./ ./
+COPY ./backend ./backend
 
 RUN apt-get install python3-pip -y
 RUN pip3 install pip

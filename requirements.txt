@@ -1,3 +1,4 @@
+git+https://github.com/openfoodfacts/openfoodfacts-python
 astroid==1.6.6
 beautifulsoup4==4.8.2
 bs4==0.0.1
@@ -18,7 +19,6 @@ lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==8.1.0
-openfoodfacts==0.1.0
 peewee==3.13.1
 pycodestyle==2.5.0
 PyJWT==1.4.2
