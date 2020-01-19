@@ -6,12 +6,21 @@ import Typography from '@material-ui/core/Typography'
 import Graph from './Graph'
 import './Dashboard.css'
 
+import { useLocation } from 'wouter'
+import { useSelector } from 'react-redux'
+
+const Entry = props => {
+    return (<p>hello</p>)
+}
 
 const Dashboard = props => {
-    /*
-    return (
-    );
-    */
+    const dashboard = useSelector( state => state.scan.get('dashboard') )
+    
+    dashboard
+        .get('')
+        .toJS()
+        .map()
+
     return (
         <Container className="Dashboard">
             <Typography variant="h2">Overview</Typography>
@@ -29,7 +38,9 @@ const Dashboard = props => {
             </div>
             <div className="Dashboard__events">
                 <div className="Dashboard__side"></div>
-                <div className="Dashboard__feed"></div>
+                <div className="Dashboard__feed">
+                
+                </div>
             </div>
         </Container>
     )
