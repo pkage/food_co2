@@ -17,6 +17,13 @@
     },
     {
         "keywords": [
+            "onion"
+        ],
+        "categories" : ["vegetable", "carbohydrate"],
+        "co2": 5.00
+    },
+    {
+        "keywords": [
             "Asparagus"
         ],
         "categories":["vegetable", "green"],
